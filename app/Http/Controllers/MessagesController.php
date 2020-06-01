@@ -21,10 +21,16 @@ class MessagesController extends Controller
         return view('home')->with('messages', $messages);
     }
 
-    public function create()
+    public function create(int $id = 0, String $subject = '')
     {
-        $users = User::where('id', '!=', Auth::id());
-        return view('create')->with('users', $users);
+        if ($id === 0){
+          $users = User::where('id', '!=', Auth::id());
+        } else{
+          $users = User::where('id', $id)->get();
+        }
+
+        if ($subject !== '') $subject = 'Re: ' . $subject;
+        return view('create')->with(['users' => $users, 'subject' => $subject]);
     }
 
     public function send(Request $request)
@@ -46,7 +52,15 @@ class MessagesController extends Controller
 
     public function sent()
     {
-        $messages = Message::with('userTo')->where('user_id_from', Auth::id())->get();
+        $messages = Message::with('userTo')->where('user_id_from', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('sent')->with('messages', $messages);
+    }
+
+    public function read(int $id)
+    {
+        $message = Message::with('userFrom')->find($id);
+        $message->read = true;
+        $message->save();
+        return view('read')->with('message', $message);
     }
 }
