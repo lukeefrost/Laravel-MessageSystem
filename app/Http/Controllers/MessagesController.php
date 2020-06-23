@@ -24,7 +24,7 @@ class MessagesController extends Controller
     public function create(int $id = 0, String $subject = '')
     {
         if ($id === 0){
-          $users = User::where('id', '!=', Auth::id());
+          $users = User::where('id', '!=', Auth::id())->get();
         } else{
           $users = User::where('id', $id)->get();
         }
