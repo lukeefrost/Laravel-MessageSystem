@@ -8,7 +8,7 @@ class Message extends Model
 {
   public function userFrom()
   {
-      return $this->hasMany('App\User', 'user_id_from');
+      return $this->belongsTo('App\User', 'user_id_from');
   }
 
   public function userTo()

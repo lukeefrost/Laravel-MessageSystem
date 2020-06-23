@@ -14,11 +14,11 @@
   </div>
   <div class="form-group">
     <label for="subject">Subject</label>
-    <input type="text" class="form-control" name="subject" id="subject" placeholder="Enter message" value="{{ $subject }}">
+    <input type="text" class="form-control" name="subject" id="subject" placeholder="Enter subject" value="{{ $subject }}">
   </div>
   <div class="form-group">
     <label for="message">Message</label>
-    <textarea class="form-control" name="message" id="message" rows="3"></textarea>
+    <textarea class="form-control" name="message" id="message" rows="3" placeholder="Enter message"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

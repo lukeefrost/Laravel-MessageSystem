@@ -17,7 +17,7 @@ class MessagesController extends Controller
 
     public function index()
     {
-        $messages = Message::with('user_id_from')->where('user_id_to', Auth::id())->notDeleted()->get();
+        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->get();
         return view('home')->with('messages', $messages);
     }
 
@@ -44,10 +44,12 @@ class MessagesController extends Controller
         $message->user_id_from = Auth::id();
         $message->user_id_to = $request->input('to');
         $message->subject = $request->input('subject');
-        $message->body = $request->input('body');
+        $message->body = $request->input('message');
+        $message->read = false;
+        $message->deleted = false;
         $message->save();
 
-        return redirect()->to('/name')->with('status', 'Message sent successfully');
+        return redirect()->to('/create')->with('status', 'Message sent successfully');
     }
 
     public function sent()
